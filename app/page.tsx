@@ -1,13 +1,15 @@
-import { getSubscribe } from './getSubscribe'
-import Subscribe from './Subscribe'
+import EntryInput from '@/components/EntryInput'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export default async function Home() {
-  const rows = await getSubscribe()
-
+  const token = cookies().get('token')
+  if (token) {
+    redirect('/subscribe')
+  }
   return (
     <main>
-      <div className="23">总共 {rows.length}</div>
-      <Subscribe subscribes={rows} />
+      <EntryInput />
     </main>
   )
 }

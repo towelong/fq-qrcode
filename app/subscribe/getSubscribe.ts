@@ -1,5 +1,4 @@
-import { Buffer } from 'node:buffer'
-import process from 'node:process'
+import { Buffer } from 'buffer'
 
 export interface ISubscribe {
   name: string
@@ -7,7 +6,7 @@ export interface ISubscribe {
 }
 
 export async function getSubscribe() {
-  const res = await fetch(process.env.SUBSCRIBE_URL!, { cache: 'no-store' })
+  const res = await fetch(process.env.SUBSCRIBE_URL!, { next: { revalidate: 60 } })
   const str = await res.text()
   const decodedData = Buffer.from(str, 'base64')
   const listText = decodedData.toString('utf-8')
