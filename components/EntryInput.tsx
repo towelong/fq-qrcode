@@ -3,10 +3,12 @@
 import { MouseEvent, useState } from "react"
 import { useRouter } from 'next/navigation'
 import { setCookie } from "cookies-next"
+import clsx from "clsx"
 
 export default function EntryInput() {
   const [input, setInput] = useState('')
-  const [show, setShow] = useState(false)
+  const [tip, setTip] = useState('禁止进入，请输入进入码')
+  const [show, setShow] = useState(true)
   const router = useRouter()
 
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -22,15 +24,19 @@ export default function EntryInput() {
       router.push("/subscribe")
     } else {
       setShow(false)
+      setTip('进入码错误')
       setInput('')
     }
   }
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center gap-2">
-      {!show && <p>禁止进入，请输入进入码</p>}
+      <p className={clsx(!show && 'text-red-500')}>{tip}</p>
       <form className="flex flex-col gap-2">
-        <input className="border p-2" onChange={e => setInput(e.target.value)} />
+        <input
+          className={clsx('border p-2', !show && 'border-red-500')}
+          value={input}
+          onChange={e => setInput(e.target.value)} />
         <button className="border bg-blue-400 text-white p-2" onClick={handleClick}>点击进入</button>
       </form>
     </div>
