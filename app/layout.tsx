@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const runtime = 'nodejs'
+
 export const metadata: Metadata = {
   title: 'Home | QrCode',
   description: 'Created by towelong',
