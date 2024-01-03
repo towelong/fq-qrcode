@@ -1,14 +1,14 @@
-import mysql from 'serverless-mysql'
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 
-export const db = mysql({
-  config: {
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    port: Number.parseInt(process.env.MYSQL_PORT!),
-    database: process.env.MYSQL_DB,
-    insecureAuth: true,
-  },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  library: require('mysql2'),
-})
+import * as schema from "./schema";
+
+const pool = new Pool({
+  host: process.env.POSTGRES_HOST,
+  port: Number.parseInt(process.env.POSTGRES_PORT!),
+  user: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB_1,
+});
+
+export const db = drizzle(pool, { schema: schema });
