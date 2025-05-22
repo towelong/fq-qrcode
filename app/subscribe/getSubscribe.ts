@@ -20,7 +20,9 @@ export async function getSubscribe() {
       url !== "" &&
       name.indexOf("剩余") < 0 &&
       name.indexOf("套餐") < 0 &&
-      name.indexOf("距离") < 0
+      name.indexOf("距离") < 0 &&
+      name.indexOf("Expire Date") < 0 &&
+      name.indexOf("GB") < 0
     ) {
       rows.push({
         url,
